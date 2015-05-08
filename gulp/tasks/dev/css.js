@@ -1,24 +1,14 @@
-var gulp = require('gulp');
-var minifyCss = require('gulp-minify-css');
+var gulp = require('gulp'),
+    sass = require('gulp-ruby-sass'),
+    minifycss = require('gulp-minify-css');
+    //rename = require('gulp-rename');
 
-var concat = require('gulp-concat');
-
-var uglify = require('gulp-uglify');
-
-//var rename = require('gulp-rename');
-//
-//gulp.task('uglify-css', function() {
-//    return gulp.src('../../../static/assets/css/*.css')
-//        .pipe(uglify())
-//        .pipe(rename({suffix: '.min'}))
-//        .pipe(gulp.dest('../../../static/assets/css/'));
-//});
-
-
-gulp.task('minify-css', function() {
-    gulp.src('../../../static/assets/css/*.css')
-        //.pipe(minifyCss())
-        .pipe(concat('style.min.css'))
-        .pipe(uglify())
-        .pipe(gulp.dest('../../../static/assets/css/'))
+gulp.task('styles', function() {
+    //return gulp.src('../../../static/scss/*.scss')
+    return sass('../../../static/scss/')
+    .on('error', function (err) {
+        console.error('Error!', err.message);
+    })
+    .pipe(minifycss())
+    .pipe(gulp.dest('../../../static/assets/css/'));
 });
